@@ -25,6 +25,10 @@
 #include "tune.h"
 #include "uci.h"
 
+#ifdef __clang__
+#error "GCC only"
+#endif
+
 using namespace Stockfish;
 
 int main(int argc, char* argv[]) {
