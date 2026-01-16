@@ -677,6 +677,7 @@ ifeq ($(optimize),yes)
 		ifeq ($(OS), Android)
 			CXXFLAGS += -fno-gcse -mthumb -march=armv7-a -mfloat-abi=softfp
 		endif
+		CXXFLAGS += --param max-inline-insns-auto=300
 	endif
 
 	ifeq ($(KERNEL),Darwin)
@@ -1131,14 +1132,14 @@ clang-profile-use:
 gcc-profile-make:
 	@mkdir -p profdir
 	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
-	EXTRACXXFLAGS='-fprofile-generate=profdir --param max-inline-insns-auto=100' \
+	EXTRACXXFLAGS='-fprofile-generate=profdir' \
 	EXTRACXXFLAGS+=$(EXTRAPROFILEFLAGS) \
 	EXTRALDFLAGS='-lgcov' \
 	all
 
 gcc-profile-use:
 	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
-	EXTRACXXFLAGS='-fprofile-use=profdir -fno-peel-loops -fno-tracer --param max-inline-insns-auto=100' \
+	EXTRACXXFLAGS='-fprofile-use=profdir -fno-peel-loops -fno-tracer' \
 	EXTRACXXFLAGS+=$(EXTRAPROFILEFLAGS) \
 	EXTRALDFLAGS='-lgcov' \
 	all
